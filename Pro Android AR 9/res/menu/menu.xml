@@ -1,11 +1,6 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- <item android:id="@+id/showRadar" 
-          android:title="Hide Radar">
-    </item> -->
-    <item android:id="@+id/showZoomBar" 
-          android:title="Show Zoom Bar">
-    </item>
-    <item android:id="@+id/exit" 
-          android:title="Exit">
-    </item>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+	<item android:title="Show Zoom Bar" 
+	    android:id="@+id/showZoomBar"/> 
+	<item android:title="Exit" 
+	    android:id="@+id/exit"/> 
 </menu>
