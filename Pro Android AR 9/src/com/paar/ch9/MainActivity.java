@@ -61,10 +61,6 @@ public class MainActivity extends AugmentedActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.v(TAG, "onOptionsItemSelected() item="+item);
         switch (item.getItemId()) {
-            case R.id.showRadar:
-                showRadar = !showRadar;
-                item.setTitle(((showRadar)? "Hide" : "Show")+" Radar");
-                break;
             case R.id.showZoomBar:
                 showZoomBar = !showZoomBar;
                 item.setTitle(((showZoomBar)? "Hide" : "Show")+" Zoom Bar");

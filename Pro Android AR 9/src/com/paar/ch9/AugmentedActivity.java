@@ -24,8 +24,6 @@ import android.widget.TextView;
 public class AugmentedActivity extends SensorsActivity implements OnTouchListener {
     private static final String TAG = "AugmentedActivity";
     private static final DecimalFormat FORMAT = new DecimalFormat("#.##");
-    private static final int ZOOMBAR_BACKGROUND_COLOR = Color.argb(125,55,55,55);
-    private static final String END_TEXT = FORMAT.format(AugmentedActivity.MAX_ZOOM)+" km";
     private static final int END_TEXT_COLOR = Color.WHITE;
 
     protected static WakeLock wakeLock = null;
@@ -42,8 +40,8 @@ public class AugmentedActivity extends SensorsActivity implements OnTouchListene
     public static final float EIGHTY_PERCENTY = 4f*TWENTY_PERCENT;
 
     public static boolean useCollisionDetection = true;
-    public static boolean showRadar = true;
-    public static boolean showZoomBar = true;
+    public static boolean showRadar = false;
+    public static boolean showZoomBar = false;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,10 +60,9 @@ public class AugmentedActivity extends SensorsActivity implements OnTouchListene
         zoomLayout.setVisibility((showZoomBar)?LinearLayout.VISIBLE:LinearLayout.GONE);
         zoomLayout.setOrientation(LinearLayout.VERTICAL);
         zoomLayout.setPadding(5, 5, 5, 5);
-        zoomLayout.setBackgroundColor(ZOOMBAR_BACKGROUND_COLOR);
-
+        zoomLayout.setGravity(Gravity.CENTER);
+       
         endLabel = new TextView(this);
-        endLabel.setText(END_TEXT);
         endLabel.setTextColor(END_TEXT_COLOR);
         LinearLayout.LayoutParams zoomTextParams =  new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
         zoomLayout.addView(endLabel, zoomTextParams);
@@ -74,7 +71,7 @@ public class AugmentedActivity extends SensorsActivity implements OnTouchListene
         myZoomBar.setMax(100);
         myZoomBar.setProgress(50);
         myZoomBar.setOnSeekBarChangeListener(myZoomBarOnSeekBarChangeListener);
-        LinearLayout.LayoutParams zoomBarParams =  new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.FILL_PARENT);
+        LinearLayout.LayoutParams zoomBarParams =  new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,300);
         zoomBarParams.gravity = Gravity.CENTER_HORIZONTAL;
         zoomLayout.addView(myZoomBar, zoomBarParams);
 
@@ -153,7 +150,7 @@ public class AugmentedActivity extends SensorsActivity implements OnTouchListene
 
     protected void updateDataOnZoom() {
         float zoomLevel = calcZoomLevel();
-        Log.d("CheckJason", FORMAT.format(zoomLevel));
+        endLabel.setText(FORMAT.format(zoomLevel)+" km");
         ARData.setRadius(zoomLevel);
         ARData.setZoomLevel(FORMAT.format(zoomLevel));
         ARData.setZoomProgress(myZoomBar.getProgress());

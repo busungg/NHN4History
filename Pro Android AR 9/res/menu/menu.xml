@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/showRadar" 
+    <!-- <item android:id="@+id/showRadar" 
           android:title="Hide Radar">
-    </item>
+    </item> -->
     <item android:id="@+id/showZoomBar" 
-          android:title="Hide Zoom Bar">
+          android:title="Show Zoom Bar">
     </item>
     <item android:id="@+id/exit" 
           android:title="Exit">
