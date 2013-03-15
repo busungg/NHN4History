@@ -19,10 +19,13 @@ public class CameraCompatibility {
 	};
 
 	private static void initCompatibility() {
-		try {
+		try 
+		{
 			getSupportedPreviewSizes = Camera.Parameters.class.getMethod("getSupportedPreviewSizes", new Class[] { } );
 			mDefaultDisplay_getRotation = Display.class.getMethod("getRotation", new Class[] { } );
-		} catch (NoSuchMethodException nsme) {
+		} 
+		catch (NoSuchMethodException nsme) 
+		{
 		}
 	}
 

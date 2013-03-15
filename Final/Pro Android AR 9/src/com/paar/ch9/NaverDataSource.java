@@ -1,5 +1,6 @@
 package com.paar.ch9;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -29,11 +30,6 @@ public class NaverDataSource extends NetworkDataSource {
         icon=BitmapFactory.decodeResource(res, R.drawable.naver);
     }
 
-	@Override
-	public String createRequestURL(double lat, double lon, double alt, float radius, String locale) {
-		return null;
-	}
-	
 	//http://map.naver.com/search2/searchCompanyInRadius.nhn?pageSize=100&xPos=127.0487089&yPos=37.518352&radius=1000&query=%EC%8A%88%ED%8D%BC
 	//네이버 종류
 	@Override
@@ -85,17 +81,42 @@ public class NaverDataSource extends NetworkDataSource {
         {
         	try 
         	{
-        		Log.d("Naver", jo.getString("comID") + " " +
-        				jo.getString("name") + " " +
-        				jo.getDouble("longitude") + " " +
-        				jo.getDouble("latitude"));
+//        		Log.d("Naver", jo.getString("comID") + " " +
+//        				jo.getString("name") + " " +
+//        				jo.getDouble("longitude") + " " +
+//        				jo.getDouble("latitude"));
+        		
+        		//고도값을 얻기위해 다시 파싱힌다.
+    	        InputStream stream = null;
+    	        stream = getHttpGETInputStream("http://maps.googleapis.com/maps/api/elevation/json?locations=" + jo.getDouble("latitude") + "," + jo.getDouble("longitude") +"&sensor=false");
+    	        
+    	        if (stream == null)
+    	            throw new NullPointerException();
+
+    	        String string = null;
+    	        string = getHttpInputString(stream);
+    	        
+    	        if (string == null)
+    	            throw new NullPointerException();
+    	        
+    	        //고도 json 정보를 저장할수 있는 json object
+    	        JSONObject altJson = null;
+    	        try {
+    	        	altJson = new JSONObject(string);
+    	        } catch (JSONException e) {
+    	            e.printStackTrace();
+    	        }
+    	        if (altJson == null)
+    	            throw new NullPointerException();
+    	        
+    	        //Log.d("Naver", "고도 " + altJson.getJSONArray("results").getJSONObject(0).getDouble("elevation"));
         		
         		ma = new IconMarker(
         				jo.getString("comID"),
         				jo.getString("name"),
         				jo.getDouble("latitude"),
         				jo.getDouble("longitude"),
-        				100,
+        				altJson.getJSONArray("results").getJSONObject(0).getDouble("elevation"),
         				Color.WHITE,
         				icon);
         	} 

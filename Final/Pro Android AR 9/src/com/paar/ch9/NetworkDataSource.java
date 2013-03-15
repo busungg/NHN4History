@@ -22,11 +22,6 @@ public abstract class NetworkDataSource extends DataSource {
 
     protected List<Marker> markersCache = null;
     
-    //예시 위키피디아
-    //http://ws.geonames.org/findNearbyWikipediaJSON?lat=37.5537&lng=126.9852&radius=20&maxRows=40&lang=en
-    public abstract String createRequestURL(double lat, double lon, double alt,
-                                            float radius, String locale);
-    
     //예시 네이버
     //http://map.naver.com/search2/searchCompanyInRadius.nhn?pageSize=100&xPos=127.0575882&yPos=37.5170877&radius=500&query=%EB%A7%9B%EC%A7%91
     public abstract String createRequestURL(double xPos, double yPos, double radius, String query);

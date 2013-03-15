@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AugmentedActivity {
     private static final String TAG = "MainActivity";
-    private static final String locale = "en";
     private static final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<Runnable>(1);
     private static final ThreadPoolExecutor exeService = new ThreadPoolExecutor(1, 1, 20, TimeUnit.SECONDS, queue);
 	private static final Map<String,NetworkDataSource> sources = new ConcurrentHashMap<String,NetworkDataSource>();    
@@ -29,16 +28,6 @@ public class MainActivity extends AugmentedActivity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        /*
-        LocalDataSource localData = new LocalDataSource(this.getResources());
-        ARData.addMarkers(localData.getMarkers());
-		*/
-
-        /*NetworkDataSource twitter = new TwitterDataSource(this.getResources());
-        sources.put("twitter",twitter);*/
-        /*NetworkDataSource wikipedia = new WikipediaDataSource(this.getResources());
-        sources.put("wiki",wikipedia);*/
         
         NetworkDataSource naver = new NaverDataSource(this.getResources());
         sources.put("naver", naver);
