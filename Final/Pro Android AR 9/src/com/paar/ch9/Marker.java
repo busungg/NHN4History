@@ -33,6 +33,7 @@ public class Marker implements Comparable<Marker> {
     
     protected volatile PaintableObject gpsSymbol = null;
     protected volatile PaintablePosition symbolContainer = null;
+    protected String id = null;
     protected String name = null;
     protected volatile PhysicalLocationUtility physicalLocation = new PhysicalLocationUtility();
     protected volatile double distance = 0.0;
@@ -54,10 +55,29 @@ public class Marker implements Comparable<Marker> {
 	public Marker(String name, double latitude, double longitude, double altitude, int color) {
 		set(name, latitude, longitude, altitude, color);
 	}
+	
+	public Marker(String id, String name, double latitude, double longitude, double altitude, int color) {
+		set(id, name, latitude, longitude, altitude, color);
+	}
 
 	public synchronized void set(String name, double latitude, double longitude, double altitude, int color) {
 		if (name==null) throw new NullPointerException();
 
+		this.name = name;
+		this.physicalLocation.set(latitude,longitude,altitude);
+		this.color = color;
+		this.isOnRadar = false;
+		this.isInView = false;
+		this.symbolXyzRelativeToCameraView.set(0, 0, 0);
+		this.textXyzRelativeToCameraView.set(0, 0, 0);
+		this.locationXyzRelativeToPhysicalLocation.set(0, 0, 0);
+		this.initialY = 0.0f;
+	}
+	
+	public synchronized void set(String id, String name, double latitude, double longitude, double altitude, int color) {
+		if (name==null) throw new NullPointerException();
+
+		this.id = id;
 		this.name = name;
 		this.physicalLocation.set(latitude,longitude,altitude);
 		this.color = color;
@@ -347,6 +367,8 @@ public class Marker implements Comparable<Marker> {
 
         textXyzRelativeToCameraView.get(textArray);
         symbolXyzRelativeToCameraView.get(symbolArray);
+        
+        Log.d("Naver", "drawIcon");
 
         float currentAngle = Utilities.getAngle(symbolArray[0], symbolArray[1], textArray[0], textArray[1]);
         float angle = currentAngle + 90;

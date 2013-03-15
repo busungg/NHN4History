@@ -40,7 +40,7 @@ public class AugmentedActivity extends SensorsActivity implements OnTouchListene
     public static final float EIGHTY_PERCENTY = 4f*TWENTY_PERCENT;
 
     public static boolean useCollisionDetection = true;
-    public static boolean showRadar = false;
+    public static boolean showRadar = true;
     public static boolean showZoomBar = false;
 
 	@Override

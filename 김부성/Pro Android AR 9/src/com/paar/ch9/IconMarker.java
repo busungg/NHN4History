@@ -10,6 +10,11 @@ public class IconMarker extends Marker {
         super(name, latitude, longitude, altitude, color);
         this.bitmap = bitmap;
     }
+    
+    public IconMarker(String id, String name, double latitude, double longitude, double altitude, int color, Bitmap bitmap) {
+        super(id, name, latitude, longitude, altitude, color);
+        this.bitmap = bitmap;
+    }
 
     @Override
     public void drawIcon(Canvas canvas) {

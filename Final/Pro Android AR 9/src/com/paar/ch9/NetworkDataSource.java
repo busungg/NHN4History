@@ -13,6 +13,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public abstract class NetworkDataSource extends DataSource {
     protected static final int MAX = 1000;
     protected static final int READ_TIMEOUT = 10000;
@@ -20,9 +22,15 @@ public abstract class NetworkDataSource extends DataSource {
 
     protected List<Marker> markersCache = null;
     
+    //예시 위키피디아
+    //http://ws.geonames.org/findNearbyWikipediaJSON?lat=37.5537&lng=126.9852&radius=20&maxRows=40&lang=en
     public abstract String createRequestURL(double lat, double lon, double alt,
                                             float radius, String locale);
-
+    
+    //예시 네이버
+    //http://map.naver.com/search2/searchCompanyInRadius.nhn?pageSize=100&xPos=127.0575882&yPos=37.5170877&radius=500&query=%EB%A7%9B%EC%A7%91
+    public abstract String createRequestURL(double xPos, double yPos, double radius, String query);
+    
     public abstract List<Marker> parse(JSONObject root);
 
     public List<Marker> getMarkers() {
@@ -41,12 +49,13 @@ public abstract class NetworkDataSource extends DataSource {
                 return new FileInputStream(urlStr.replace("file://", ""));
 
             URL url = new URL(urlStr);
+            
             conn = url.openConnection();
             conn.setReadTimeout(READ_TIMEOUT);
             conn.setConnectTimeout(CONNECT_TIMEOUT);
 
             is = conn.getInputStream();
-
+            
             return is;
         } catch (Exception ex) {
             try {
@@ -97,11 +106,13 @@ public abstract class NetworkDataSource extends DataSource {
 
         InputStream stream = null;
         stream = getHttpGETInputStream(url);
+        
         if (stream == null)
             throw new NullPointerException();
 
         String string = null;
         string = getHttpInputString(stream);
+        
         if (string == null)
             throw new NullPointerException();
 

@@ -37,7 +37,13 @@ public class WikipediaDataSource extends NetworkDataSource {
         "&radius="+ radius +
         "&maxRows=40" +
         "&lang=" + locale;
-
+	}
+	
+	//네이버종료
+	@Override
+	public String createRequestURL(double xPos, double yPos, double radius, String query)
+	{
+		return null;
 	}
 
 	@Override
@@ -69,8 +75,8 @@ public class WikipediaDataSource extends NetworkDataSource {
         Marker ma = null;
         if (	jo.has("title") && 
         		jo.has("lat") && 
-        		jo.has("lng") //&& 
-        		//jo.has("elevation")
+        		jo.has("lng") && 
+        		jo.has("elevation")
         ) {
         	try {
         		Log.d("CheckJason", jo.getString("title"));
@@ -78,7 +84,7 @@ public class WikipediaDataSource extends NetworkDataSource {
         				jo.getString("title"),
         				jo.getDouble("lat"),
         				jo.getDouble("lng"),
-        				100,//jo.getDouble("elevation"),
+        				jo.getDouble("elevation"),
         				Color.WHITE,
         				icon);
         	} catch (JSONException e) {

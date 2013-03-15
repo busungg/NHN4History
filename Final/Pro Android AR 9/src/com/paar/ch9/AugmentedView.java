@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.View;
 
 public class AugmentedView extends View {
@@ -32,7 +33,14 @@ public class AugmentedView extends View {
 
             cache.clear();
             for (Marker m : collection) {
-                m.update(canvas, 0, 0);
+            	
+            	Log.d("Naver", m.toString());
+            	Log.d("Naver", m.getName() + " " +
+            			m.getLocation().getX() + " " +
+            			m.getLocation().getY() + " " +
+            			m.getLocation().getZ());
+                
+            	m.update(canvas, 0, 0);
                 if (m.isOnRadar()) cache.add(m);
 	        }
             collection = cache;

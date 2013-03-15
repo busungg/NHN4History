@@ -29,24 +29,25 @@ public class MainActivity extends AugmentedActivity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        /*
         LocalDataSource localData = new LocalDataSource(this.getResources());
         ARData.addMarkers(localData.getMarkers());
+		*/
 
-        NetworkDataSource twitter = new TwitterDataSource(this.getResources());
-        sources.put("twitter",twitter);
-        NetworkDataSource wikipedia = new WikipediaDataSource(this.getResources());
-        sources.put("wiki",wikipedia);
+        /*NetworkDataSource twitter = new TwitterDataSource(this.getResources());
+        sources.put("twitter",twitter);*/
+        /*NetworkDataSource wikipedia = new WikipediaDataSource(this.getResources());
+        sources.put("wiki",wikipedia);*/
+        
+        NetworkDataSource naver = new NaverDataSource(this.getResources());
+        sources.put("naver", naver);
     }
 
 	@Override
     public void onStart() {
         super.onStart();
-        
-        Location last = ARData.getCurrentLocation();
-        
-        Log.d("CheckJason", last.getLatitude() + "");
-        Log.d("CheckJason", last.getLongitude() + "");
-        
+        Location last = ARData.getCurrentLocation(); 
         updateData(last.getLatitude(),last.getLongitude(),last.getAltitude());
     }
 
@@ -117,7 +118,11 @@ public class MainActivity extends AugmentedActivity {
 		
 		String url = null;
 		try {
-			url = source.createRequestURL(lat, lon, alt, ARData.getRadius(), locale);    	
+			//%EC%A7%80%ED%95%98%EC%B2%A0 //¡ˆ«œ√∂
+			//url = source.createRequestURL(lon, lat, (int)(ARData.getRadius() * 10), "%EC%A7%80%ED%95%98%EC%B2%A0");
+			url = source.createRequestURL(lon, lat, (int)(ARData.getRadius() * 1000), "%EB%A7%9B%EC%A7%91");
+			//url = source.createRequestURL(lat, lon, alt, ARData.getRadius(), locale);
+			
 		} catch (NullPointerException e) {
 			return false;
 		}

@@ -36,6 +36,13 @@ public class TwitterDataSource extends NetworkDataSource {
 	public String createRequestURL(double lat, double lon, double alt, float radius, String locale) {
 		return URL+"?geocode=" + lat + "%2C" + lon + "%2C" + Math.max(radius, 1.0) + "km";
 	}
+	
+	//네이버 종류
+	@Override
+	public String createRequestURL(double xPos, double yPos, double radius, String query)
+	{
+		return null;
+	}
 
 	@Override
 	public List<Marker> parse(String url) {
