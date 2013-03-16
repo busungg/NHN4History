@@ -20,8 +20,8 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
     private static final String TAG = "SensorsActivity";
     private static final AtomicBoolean computing = new AtomicBoolean(false); 
 
-    private static final int MIN_TIME = 30*1000;
-    private static final int MIN_DISTANCE = 10;
+    private static final int MIN_TIME = 5*1000;
+    private static final int MIN_DISTANCE = 5;
 
     private static final float temp[] = new float[9];
     private static final float rotation[] = new float[9];
@@ -226,6 +226,9 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
                 (float) ARData.getCurrentLocation().getLongitude(),
                 (float) ARData.getCurrentLocation().getAltitude(), 
                 System.currentTimeMillis());
+        
+        //고도 확인
+        Log.d("Alt", (float) ARData.getCurrentLocation().getAltitude() + "");
         
         double angleY = Math.toRadians(-gmf.getDeclination());
 

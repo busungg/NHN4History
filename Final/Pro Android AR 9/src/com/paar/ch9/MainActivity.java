@@ -37,6 +37,7 @@ public class MainActivity extends AugmentedActivity {
     public void onStart() {
         super.onStart();
         Location last = ARData.getCurrentLocation(); 
+        Log.d("Alt", last.getAltitude() + "¸Ç Ã³À½");
         updateData(last.getLatitude(),last.getLongitude(),last.getAltitude());
     }
 
@@ -66,7 +67,6 @@ public class MainActivity extends AugmentedActivity {
 	@Override
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
-        
         updateData(location.getLatitude(),location.getLongitude(),location.getAltitude());
     }
 
@@ -118,7 +118,7 @@ public class MainActivity extends AugmentedActivity {
     	
 		List<Marker> markers = null;
 		try {
-			markers = source.parse(url);
+			markers = source.parse(url, alt);
 		} catch (NullPointerException e) {
 			return false;
 		}

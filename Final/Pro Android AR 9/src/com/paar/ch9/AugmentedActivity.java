@@ -33,8 +33,8 @@ public class AugmentedActivity extends SensorsActivity implements OnTouchListene
     protected static LinearLayout zoomLayout = null;
     protected static AugmentedView augmentedView = null;
 
-    public static final float MAX_ZOOM = 100; //in KM
-    public static final float ONE_PERCENT = MAX_ZOOM/100f;
+    public static final float MAX_ZOOM = 10; //in KM
+    public static final float ONE_PERCENT = MAX_ZOOM/10f;
     public static final float TEN_PERCENT = 10f*ONE_PERCENT;
     public static final float TWENTY_PERCENT = 2f*TEN_PERCENT;
     public static final float EIGHTY_PERCENTY = 4f*TWENTY_PERCENT;
@@ -68,8 +68,8 @@ public class AugmentedActivity extends SensorsActivity implements OnTouchListene
         zoomLayout.addView(endLabel, zoomTextParams);
 
         myZoomBar = new VerticalSeekBar(this);
-        myZoomBar.setMax(100);
-        myZoomBar.setProgress(50);
+        myZoomBar.setMax(10);
+        myZoomBar.setProgress(2);
         myZoomBar.setOnSeekBarChangeListener(myZoomBarOnSeekBarChangeListener);
         LinearLayout.LayoutParams zoomBarParams =  new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,300);
         zoomBarParams.gravity = Gravity.CENTER_HORIZONTAL;

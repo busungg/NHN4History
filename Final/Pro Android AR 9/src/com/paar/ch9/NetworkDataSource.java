@@ -26,7 +26,7 @@ public abstract class NetworkDataSource extends DataSource {
     //http://map.naver.com/search2/searchCompanyInRadius.nhn?pageSize=100&xPos=127.0575882&yPos=37.5170877&radius=500&query=%EB%A7%9B%EC%A7%91
     public abstract String createRequestURL(double xPos, double yPos, double radius, String query);
     
-    public abstract List<Marker> parse(JSONObject root);
+    public abstract List<Marker> parse(JSONObject root, double alt);
 
     public List<Marker> getMarkers() {
         return markersCache;
@@ -95,7 +95,7 @@ public abstract class NetworkDataSource extends DataSource {
         return sb.toString();
     }
 
-    public List<Marker> parse(String url) {
+    public List<Marker> parse(String url, double alt) {
         if (url == null)
             throw new NullPointerException();
 
@@ -120,6 +120,6 @@ public abstract class NetworkDataSource extends DataSource {
         if (json == null)
             throw new NullPointerException();
         
-        return parse(json);
+        return parse(json, alt);
     }
 }

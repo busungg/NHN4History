@@ -45,6 +45,7 @@ public class AugmentedView extends View {
 	        }
             collection = cache;
 
+            //충돌관련된것
 	        if (AugmentedActivity.useCollisionDetection) adjustForCollisions(canvas,collection);
 
 	        ListIterator<Marker> iter = collection.listIterator(collection.size());
@@ -67,14 +68,19 @@ public class AugmentedView extends View {
                 if (marker1.equals(marker2) || updated.contains(marker2) || !marker2.isInView()) continue;
 
                 if (marker1.isMarkerOnMarker(marker2)) {
-                    marker2.getLocation().get(locationArray);
+                    /*marker2.getLocation().get(locationArray);
                     float y = locationArray[1];
                     float h = collisions*COLLISION_ADJUSTMENT;
                     locationArray[1] = y+h;
                     marker2.getLocation().set(locationArray);
                     marker2.update(canvas, 0, 0);
                     collisions++;
-                    updated.add(marker2);
+                    updated.add(marker2);*/
+                	
+                	//겹치는 것은 레이더와 뷰를 없앤다.
+                	marker2.isOnRadar = false;
+                	marker2.isInView = false;
+                	updated.add(marker2);
                 }
             }
             updated.add(marker1);

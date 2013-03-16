@@ -39,7 +39,7 @@ public class NaverDataSource extends NetworkDataSource {
 	}
 
 	@Override
-	public List<Marker> parse(JSONObject root) {
+	public List<Marker> parse(JSONObject root, double alt) {
 		if (root==null) return null;
 		
 		JSONObject jo = null;
@@ -60,7 +60,7 @@ public class NaverDataSource extends NetworkDataSource {
 			int top = Math.min(MAX, dataArray.length());
 			for (int i = 0; i < top; i++) {					
 				jo = dataArray.getJSONObject(i);
-				Marker ma = processJSONObject(jo);
+				Marker ma = processJSONObject(jo, alt);
 				if(ma!=null) markers.add(ma);
 			}
 		} catch (JSONException e) {
@@ -69,7 +69,7 @@ public class NaverDataSource extends NetworkDataSource {
 		return markers;
 	}
 	
-	private Marker processJSONObject(JSONObject jo) {
+	private Marker processJSONObject(JSONObject jo, double alt) {
 		if (jo==null) return null;
 		
         Marker ma = null;
@@ -110,13 +110,14 @@ public class NaverDataSource extends NetworkDataSource {
     	            throw new NullPointerException();
     	        
     	        //Log.d("Naver", "°íµµ " + altJson.getJSONArray("results").getJSONObject(0).getDouble("elevation"));
-        		
+        		Log.d("Alt", alt + "");
+    	        
         		ma = new IconMarker(
         				jo.getString("comID"),
         				jo.getString("name"),
         				jo.getDouble("latitude"),
         				jo.getDouble("longitude"),
-        				altJson.getJSONArray("results").getJSONObject(0).getDouble("elevation"),
+        				altJson.getJSONArray("results").getJSONObject(0).getDouble("elevation"), //- alt,
         				Color.WHITE,
         				icon);
         	} 
