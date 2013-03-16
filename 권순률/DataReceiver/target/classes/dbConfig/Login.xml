@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="Login">
+	<typeAlias alias="Login" type="dto.Login"/>
+		<resultMap class="Login" id="Login">
+			<result property="userId" column="user_id"/>		
+			<result property="password" column="password"/>		
+		</resultMap>
+	
+	<select id="selectById" parameterClass="String" resultMap="Login">
+		select * from Login where user_id = #userId#
+	</select>
+
+</sqlMap>
