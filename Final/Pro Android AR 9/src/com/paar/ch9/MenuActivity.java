@@ -1,5 +1,7 @@
 package com.paar.ch9;
 
+import com.example.datasender.LoginActivity;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,6 +35,23 @@ public class MenuActivity extends Activity {
                 startActivity(intent);
             }
 		});
+        
+        Button button02 = (Button)findViewById(R.id.button2);
+        
+        button02.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+                // 무엇을 할지 정의 하는 인텐트를 생성한다.
+                // FirstActivity에서 SecondActivity로 이동 할것을 정의하였다.
+                Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
+                 
+                // 인텐트에 있는 정보대로 액티비티를 시작한다.
+                startActivity(intent);
+				
+			}
+		});
+        
 	}
 
 	@Override
