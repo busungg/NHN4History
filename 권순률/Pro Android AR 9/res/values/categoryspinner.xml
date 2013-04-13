@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="categorylist">
+        <item>음식점</item>
+        <item>카페</item>
+        <item>술집</item>
+        <item>쇼핑</item>
+        <item>스포츠</item>
+        <item>숙박</item>
+        <item>의료</item>
+        <item>은행</item>
+        <item>관공서</item>
+        <item>미용</item>
+        <item>pc방</item>
+        <item>주유소</item>
+    </string-array>
+    
+</resources>
