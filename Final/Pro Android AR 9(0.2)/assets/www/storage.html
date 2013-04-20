@@ -1,0 +1,115 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+		<meta charset="euc-kr" /> 	
+	</head> 
+
+	<body>
+		<div data-role="page" data-theme="a">
+			<script type="text/javascript">
+				function createDB() {
+					var db = window.openDatabase("database", "1.0", "App DB", 10000);
+					db.transaction(
+						function(tx) {
+							tx.executeSql("DROP TABLE IF EXISTS board");
+							tx.executeSql("CREATE TABLE IF NOT EXISTS board (writer, content)");
+						}, 
+						function(tx, err) {
+							alert("DB 생성 에러: "+err);
+						}, 
+						function() {
+					   		alert("DB 생성 성공")
+						}
+					);
+				}
+				
+				function newInsert() {
+					var db = window.openDatabase("database", "1.0", "App DB", 10000);
+					db.transaction(
+						function(tx) {
+							var writer = $("#writer").attr("value");
+							var content = $("#content").attr("value");
+							tx.executeSql("INSERT INTO board VALUES ('" + writer + "','" + content + "')");
+						}, 
+						function(tx, err) {
+							alert("삽입 에러: "+err);
+						},
+						function() {
+							alert("삽입 성공")
+						}
+					);
+				}
+				
+				function allSelect() {
+					var db = window.openDatabase("database", "1.0", "App DB", 10000);
+					db.transaction(
+						function(tx) {
+							tx.executeSql("SELECT * FROM board", [], function(tx, results) {
+								var boardlist = $("#boardlist");
+								boardlist.empty();								
+								var len = results.rows.length;
+								for (var i=0; i<len; i++) {
+									boardlist.append(
+										"<li>" +
+											"<table style='width:100%'>" +
+												"<td>" + results.rows.item(i).writer  + "</td>" +
+												"<td>" + results.rows.item(i).content  + "</td>" +
+											"</table>" +
+										"</li>"
+									);
+								}
+								boardlist.listview("refresh");
+							});
+						}, 
+						function(tx, err) {
+							alert("검색 에러: "+err);
+						}, 
+						function() {
+							alert("검색 성공");
+						}
+					);					
+				}
+				function allDelete() {
+					var db = window.openDatabase("database", "1.0", "App DB", 10000);
+					db.transaction(
+						function(tx) {
+							tx.executeSql("DELETE FROM board");
+						}, 
+						function(tx, err) {
+				        	alert("삭제 에러: "+err);
+				    	}, function() {
+				    		alert("삭제 성공")
+				    	}
+				    );
+				}
+			</script>
+			
+			<div data-role="header">
+				<h1>데이터베이스</h1>
+				<a href="#" data-role="button" data-rel="back">이전</a>
+			</div> 	
+			
+			<div data-role="header">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="javascript:createDB()" data-role="button">DB생성</a></li>
+						<li><a href="javascript:newInsert()" data-role="button">삽입</a></li>
+						<li><a href="javascript:allSelect()" data-role="button">검색</a></li>
+						<li><a href="javascript:allDelete()" data-role="button">삭제</a></li>
+					</ul>
+				</div>
+			</div>				
+			
+			<div data-role="content">
+				<label for="writer">글쓴이:</label>
+				<input id="writer" type="text" value="신용권"/> <br/>			
+		
+				<label for="password">내용:</label>
+				<input id="content" type="text" value="수고하셨습니다."/> <br/>
+		
+				<ul id="boardlist" data-role="listview" data-inset="true">
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

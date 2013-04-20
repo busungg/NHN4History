@@ -1,0 +1,62 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+		<meta charset="euc-kr" /> 	
+	</head> 
+
+	<body>
+		<div data-role="page" data-theme="a">
+			<script type="text/javascript" charset="utf-8">
+				var watchID = null;
+				document.addEventListener("deviceready", onDeviceReady, false);
+				function onDeviceReady() {
+					watchHeading();
+				}
+				
+				function getCurrentHeading() {
+					navigator.compass.getCurrentHeading(onSuccess, onError);
+				}			
+				
+				function watchHeading() {
+					if(watchID == null) {
+						watchID = navigator.compass.watchHeading(onSuccess, onError,  {frequency: 500});
+					} else {
+						navigator.compass.clearWatch(watchID);
+						watchID = null;
+					}
+				}
+				
+				function onSuccess(heading) {
+					$('#azimuth').text(heading.magneticHeading);
+				}
+				
+				function onError(compassError) {
+					alert('Compass error: ' + compassError.code);
+				}
+			</script>
+			
+			<div data-role="header">
+				<h1>방위각</h1>
+				<a href="#" data-role="button" data-rel="back">이전</a>
+			</div> 
+			
+			<div data-role="header">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="javascript:getCurrentHeading()" data-role="button">1회 측정</a></li>
+						<li><a href="javascript:watchHeading()" data-role="button">반복 측정(토글)</a></li>
+					</ul>
+				</div>
+			</div>			
+			
+			<div data-role="content">	
+				Azimuth: 
+				<font color="yellow">
+					<spen id="azimuth">Waiting for heading...</spen>
+				</font>
+				도
+			</div>
+		</div>
+	</body>
+</html>
+
