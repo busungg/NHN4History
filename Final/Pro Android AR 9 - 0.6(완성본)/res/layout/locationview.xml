@@ -2,14 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    android:background="@android:color/darker_gray">
+    android:orientation="vertical"
+    android:background="@drawable/memory_list_background">
+    
+    <TextView 
+        android:text="상세설명"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textSize="30dp"
+        android:textColor="@android:color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/memory_background"
+        />
 
     <RelativeLayout
         android:id="@+id/lo_titleinfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/background_light"
         >
 
         <ImageView
@@ -33,13 +43,26 @@
 
     </RelativeLayout>
     
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/lo_descinfo"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@android:color/background_light"
         >
+         
+        <ImageView
+            android:id="@+id/lo_address_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            />
+        
+        <ImageView
+            android:id="@+id/lo_phone_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            />
          
         <TextView
             android:id="@+id/lo_address"
@@ -55,7 +78,7 @@
             android:layout_margin="10dp"
             />
          
-	</LinearLayout>
+	</RelativeLayout>
 	
     <LinearLayout
         android:id="@+id/lo_button"
@@ -63,7 +86,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@android:color/background_light"
         >
         
         <Button
