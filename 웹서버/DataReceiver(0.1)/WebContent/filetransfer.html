@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+</head>
+<body>
+	<div data-role="page" data-theme="a" id="pageId">
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+		<script type="text/javascript">
+			//var location = document.getElementById("location");
+			var latitude = 0;
+			var longitude = 0;
+
+			//폰갭 리버스 지오코딩 관련 정보
+			//phonegap geocoding
+			//http://www.designaesthetic.com/2012/05/04/phonegap-reverse-geolocation-lookup/
+			var geocoder = null; // 지오코딩을 위한 전역 변수
+
+/* 			var httpRequest = null;
+
+			function getXMLHttpRequest() {
+				if (window.ActiveXObject) {
+					try {
+						return new ActiveXObject("Msxml2.XMLHTTP");
+					} catch (e) {
+						try {
+							return new ActiveXObject("Microsoft.XMLHTTP");
+						} catch (e1) {
+							return null;
+						}
+					}
+				} else if (window.XMLHttpRequest) {
+					return new XMLHttpRequest();
+				} else {
+					return null;
+				}
+			} */
+
+			/*
+			function req(){
+				httpRequest = getXMLHttpRequest();
+				httpRequest.onreadystatechange=callbackFunction; // 콜백 함수 등록
+				alert("latitude = " + latitude + "\nlongitude = " + longitude);
+				httpRequest.open("POST",
+						"http://maps.googleapis.com/maps/api/geocode/json", false);
+				httpRequest.send("latlng=" + latitude + "," + longitude + "&sensor=true");
+				
+			}
+			
+			function callbackFunction(){
+				if(httpRequest.readyState == 4){
+					alert("4 출력");
+					if(httpRequest.status == 200){
+						var jsonStr = httpRequest.responseText;
+						alert(jsonStr);
+					}else{
+						alert("문제 발생 : " + httpRequest.status);
+					}
+				}//if문 마지막
+			}
+			 */
+
+			function getLocation() {
+				if (navigator.geolocation) {
+					navigator.geolocation
+							.watchPosition(showPosition, showError);
+					//실시간으로 계속 위도, 경도 정보를 검색해서 띄움(한번만하고 끝나는게 아님)
+				} else {
+					alert("geolocation 서비스 제공 불가");
+				}
+			}
+
+			//showPosition은 콜백함수임을 기억할 것
+			function showPosition(position) {
+				latitude = position.coords.latitude;
+				longitude = position.coords.longitude;
+				//여기서 일단 위도, 경도 정보는 모바일 내에서 획득됨
+
+ 				var latlng = new google.maps.LatLng(latitude, longitude);
+
+ 				geocoder.geocode({
+					'latLng' : latlng
+				}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						if (results[0]) {
+							var arrAddress = results[0].address_components;
+							// iterate through address_component array
+							$.each(arrAddress, function(i, address_component) {
+								if (address_component.types[0] == "locality") {
+									console.log(address_component.long_name); // city
+									alert(address_component.long_name);
+									return false; // break
+								}
+							});
+						} else {
+							alert("No results found");
+						}
+					} else {
+						alert("Geocoder failed due to: " + status);
+					}
+				}); 
+ 
+				//req();
+				//alert("latitude : " + latitude + " " + "longitude" + longitude);
+
+				/* document.getElementById("location").innerHTML = "latitude : "
+						+ latitude + " " + "longitude : " + longitude; */
+				// location.value = "latitude : " + latitude + " " + "longitude" + longitude;
+			}//showPosition 마지막
+
+			function showError(error) {
+
+			}
+
+			//JQM, onload, javascript 키워드로 검색
+			//http://stackoverflow.com/questions/13509701/onload-function-in-jquery-mobile-dialog-not-working
+			//http://jquerymobile.com/demos/1.2.0/docs/api/events.html
+			$('#pageId').bind('pageshow', function() {
+				//geocoder = new google.maps.Geocoder();
+
+				getLocation();
+			});
+
+			function callAlert() {
+				navigator.notification.alert("최대 5개 선택 가능합니다.", function() {
+				}, "알림", "확인");
+			}
+
+			var imageCount = 0;//문제 없음
+			var arrImageURI = new Array(5); //이것도 문제 없음
+
+			function getPhoto() {
+				if (imageCount < 5) {
+
+					navigator.camera
+							.getPicture(
+									function(imageURI) {
+										alert("imageURI 시작" + imageCount);
+
+										arrImageURI[imageCount] = imageURI;
+										alert(arrImageURI[imageCount]);
+										imageCount++;
+
+										//DOM element 추가 로 검색
+										//http://www.javascriptkit.com/javatutors/dom2.shtml 참고
+										var img = document.createElement("img");
+										img.setAttribute("src", imageURI);
+										img
+												.setAttribute("style",
+														"display:block;float:left;margin:2px;width:85px;height:85px;");
+										alert("img 태그 생성 완료");
+
+										var imageView = document
+												.getElementById("imageView");
+										imageView.appendChild(img);
+										/* 							var image = document.getElementById('image');
+																	image.style.display = 'block';
+																	image.src = imageURI; */
+									},
+									function(message) {
+										alert('Failed because: ' + message);
+									},
+									{
+										quality : 50,
+										destinationType : navigator.camera.DestinationType.FILE_URI,
+										sourceType : navigator.camera.PictureSourceType.SAVEDPHOTOALBUM
+									});
+
+					//imageCount++;
+					//alert(imageCount + " : " + imageURI);
+				} else {
+					callAlert();
+				}
+			} // getPhoto() 함수 마지막
+
+			function sendPhoto() {
+				alert("sendPhoto 진입");
+				//var text = $("#textArea").attr("value");
+				//alert(text); // 텍스트 정상 출력되는지 확인
+
+				var date = new Date(); // 시간 계산 위한 함수
+				/* 		var image = document.getElementById('image');
+					var imageURI = image.src; */
+				/*
+					이미지 여러개를 보내기 위한 설정 부분
+					for(int i = 0; i < arrImageURI.length; i++){}
+				 */
+
+				/* for(int i = 0; i < arrImageURI.length; i++){ */
+				for ( var i = 0; i < imageCount; i++) {
+					var imageURI = arrImageURI[i];
+					//alert(imageURI + ":  데이터 전송 로직 진입");
+
+					var options = new FileUploadOptions();
+					options.fileKey = "image";
+					//options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1, imageURI.length);
+					options.fileName = imageURI.substr(imageURI
+							.lastIndexOf('/') + 1)
+							+ ".jpg";
+					//alert("잠시넣음 : " + imageURI.substr(imageURI.lastIndexOf('/')+1));
+					options.mimeType = "image/jpeg";
+					//var params = new Object();
+					//alert("options 설정 완료");
+
+					//"yyyy-MM-dd-HH-mm-ss"
+					var params = {};
+					params.text = encodeURIComponent($("#textArea").attr(
+							"value"));
+					params.uptime = date.getFullYear() + "-"
+							+ (date.getMonth() + 1) + "-" + date.getDate()
+							+ "-" + date.getHours() + "-" + date.getMinutes()
+							+ "-" + date.getSeconds();
+					params.latitude = latitude;
+					params.longitude = longitude;
+					params.imageCount = arrImageURI.length; // 이미지 개수
+
+					////////////////////////////////////////////////////////////
+					/* 이미지 추가 삽입 부분 - 루프로 구현해야함 */
+					/* 				for(int i = 1; i < arrImageURI.length; i++){
+					 imageURI = arrImageURI[i];
+					 alert(imageURI + ":  데이터 전송 로직 진입");
+					 var options = new FileUploadOptions();
+					 options.fileKey = "image"+i;
+					 options.fileName = imageURI
+					 .substr(imageURI.lastIndexOf('/') + 1)
+					 + ".jpg";
+					 //alert("잠시넣음 : " + imageURI.substr(imageURI.lastIndexOf('/')+1));
+					 options.mimeType = "image/jpeg";
+					 alert(imageURI + "options 설정 완료");	
+					 }
+					 */
+					////////////////////////////////////////////////////////
+					options.params = params; // 여기서 연결해주면서 끝남
+
+					//alert("params 설정 완료");
+
+					//등록시간(uptime)
+					//위도(latitude)
+					//경도(longitude)
+
+					// HTTP multi-part POST request
+					var fileTransfer = new FileTransfer();
+					fileTransfer
+							.upload(
+									imageURI,
+									"http://155.230.52.63:8080/DataReceiver/controller?action=post",
+									function(fileUploadResult) {
+										/* alert("Code = "
+												+ fileUploadResult.responseCode
+												+ "\n" + "Response = "
+												+ fileUploadResult.response + "\n"
+												+ "Sent = "
+												+ fileUploadResult.bytesSent); */
+									}, function(error) {
+										alert("Error Code = " + error.code);
+									}, options);
+
+					/* 					var imageURI = arrImageURI[0];
+					
+					 var options = new FileUploadOptions();
+					 options.fileKey="file";
+					 //options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1, imageURI.length);
+					 options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1) + ".jpeg";
+					 //alert("잠시넣음 : " + imageURI.substr(imageURI.lastIndexOf('/')+1));
+					 options.mimeType="image/jpeg";
+					 //var params = new Object();
+					 alert("options 설정 완료");
+					
+					 //"yyyy-MM-dd-HH-mm-ss"
+					 var params = {};
+					 params.text = encodeURIComponent($("#textArea").attr("value"));
+					 params.uptime = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()+ "-"+
+					 date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds();
+					 params.latitude = latitude;
+					 params.longitude = longitude;
+					 options.params = params;
+					
+					 alert("params 설정 완료");
+					
+					 //등록시간(uptime)
+					 //위도(latitude)
+					 //경도(longitude)
+					
+					 // HTTP multi-part POST request
+					 var fileTransfer = new FileTransfer();
+					 fileTransfer.upload(
+					 imageURI, 
+					 "http://155.230.52.63:8080/DataReceiver/controller?action=post", 
+					 function(fileUploadResult) {
+					 alert("Code = " + fileUploadResult.responseCode + "\n" + 
+					 "Response = " + fileUploadResult.response + "\n" +
+					 "Sent = " + fileUploadResult.bytesSent);
+					 }, 
+					 function(error) {
+					 alert("Error Code = " + error.code);
+					 }, 
+					 options
+					 );  */
+				}//for 마지막
+				alert("파일 전송 완료");
+			}//sendPhoto 마지막
+		</script>
+
+		<div data-role="header" data-theme="a">
+			<h1>카메라</h1>
+			<a href="#" data-role="button" data-rel="back">이전</a>
+		</div>
+
+		<div id="contentDiv" data-role="content" data-theme="b">
+			<button onclick="getPhoto();">사진 선택</button>
+			<div id="imageView">
+				<!-- <img id="image" style="display:none;width:290px;height:210px;" src="" /> -->
+				<!-- <img id="image" style="display:none;width:100px;height:100px;" src="" /> -->
+			</div>
+			<!-- 			    <br>
+			    <hr/>		    
+			    <h3>텍스트 입력</h3> -->
+			<textarea id="textArea" name="textArea" rows="1" cols="5"
+				placeholder="텍스트를 입력하세요."></textarea>
+			<hr />
+			<div id="location"></div>
+			<!-- 			    <div id="location">
+			    	<input type="text" id="locationView"/>
+			    </div>	 -->
+			<hr />
+			<button onclick="getLocation();">현재위치정보</button>
+			<button onclick="sendPhoto();">포스팅하기</button>
+		</div>
+	</div>
+</body>
+</html>
