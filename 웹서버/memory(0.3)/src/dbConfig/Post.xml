@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Post">
+	<typeAlias alias="Post" type="model.dto.Post" />
+
+	<insert id="insertPost" parameterClass="Post">
+		insert into Post
+		values(#userid#, #title#, #shopname#, #category#, #tel#, #image#, #imageNumber#, #text#, #uptime#, #latitude#, #longitude#)
+	</insert>
+
+	<select id="selectAll" resultClass="Post">
+		select * from Post
+	</select>
+	
+	<delete id="deletePost" parameterClass="Int">
+	    delete from Post where postid = #id#
+	</delete>
+	
+	<delete id="deleteCategory" parameterClass="Int">
+	    delete from Post where categoryId = #id#
+	</delete>
+
+</sqlMap>
