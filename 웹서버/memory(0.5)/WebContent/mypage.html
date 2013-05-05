@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description"
+	content="The demo shows how users can effortlessly edit and select dates in the calendar. Combine date editing functionality and animated dropdown in a jQuery Datepicker control for your web app.">
+
+<title>Kendo UI jQuery DatePicker Demo</title>
+<link
+	href="http://cdn.kendostatic.com/2013.1.319/styles/kendo.common.min.css"
+	rel="stylesheet" />
+<link
+	href="http://cdn.kendostatic.com/2013.1.319/styles/kendo.default.min.css"
+	rel="stylesheet" />
+<link href="CSS/mypage.css" rel="stylesheet" type="text/css">
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="http://cdn.kendostatic.com/2013.1.319/js/kendo.all.min.js"></script>
+</head>
+<body>
+	<div id="example" class="k-content">
+		<div class="demo-section">
+			<div id="special-days">
+				<div id="calendar"></div>
+			</div>
+			<script>
+			$(document)
+					.ready(
+							function() {
+								var today = new Date(), events = [
+										+new Date(today.getFullYear(), today
+												.getMonth(), 8),
+										+new Date(today.getFullYear(), today
+												.getMonth(), 12),
+										+new Date(today.getFullYear(), today
+												.getMonth(), 24),
+										+new Date(today.getFullYear(), today
+												.getMonth() + 1, 6),
+										+new Date(today.getFullYear(), today
+												.getMonth() + 1, 7),
+										+new Date(today.getFullYear(), today
+												.getMonth() + 1, 25),
+										+new Date(today.getFullYear(), today
+												.getMonth() + 1, 27),
+										+new Date(today.getFullYear(), today
+												.getMonth() - 1, 3),
+										+new Date(today.getFullYear(), today
+												.getMonth() - 1, 5),
+										+new Date(today.getFullYear(), today
+												.getMonth() - 2, 22),
+										+new Date(today.getFullYear(), today
+												.getMonth() - 2, 27) ];
+
+								$("#calendar")
+										.kendoCalendar(
+												{
+													value : today,
+													dates : events,
+													month : {
+														// template for dates in month view
+														content : '# if ($.inArray(+data.date, data.dates) != -1) { #'
+																+ '<div class="'
+																+ '# if (data.value < 10) { #'
+																+ "exhibition"
+																+ '# } else if ( data.value < 20 ) { #'
+																+ "party"
+																+ '# } else { #'
+																+ "cocktail"
+																+ '# } #'
+																+ '">#= data.value #</div>'
+																+ '# } else { #'
+																+ '#= data.value #'
+																+ '# } #'
+													},
+													footer : false
+												});
+							});
+		</script>
+
+			<h1>Gallery</h1>
+ <div id="example" class="k-content">
+            <div class="demo-section" style="width:470px">
+                <label for="start">Start date:</label>
+                <input id="start" value="10/10/2011" />
+
+                <label for="end" style="margin-left:3em">End date:</label>
+                <input id="end" value="10/10/2012"/>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    function startChange() {
+                        var startDate = start.value(),
+                        endDate = end.value();
+
+                        if (startDate) {
+                            startDate = new Date(startDate);
+                            startDate.setDate(startDate.getDate());
+                            end.min(startDate);
+                        } else if (endDate) {
+                            start.max(new Date(endDate));
+                        } else {
+                            endDate = new Date();
+                            start.max(endDate);
+                            end.min(endDate);
+                        }
+                    }
+
+                    function endChange() {
+                        var endDate = end.value(),
+                        startDate = start.value();
+
+                        if (endDate) {
+                            endDate = new Date(endDate);
+                            endDate.setDate(endDate.getDate());
+                            start.max(endDate);
+                        } else if (startDate) {
+                            end.min(new Date(startDate));
+                        } else {
+                            endDate = new Date();
+                            start.max(endDate);
+                            end.min(endDate);
+                        }
+                    }
+
+                    var start = $("#start").kendoDatePicker({
+                        change: startChange
+                    }).data("kendoDatePicker");
+
+                    var end = $("#end").kendoDatePicker({
+                        change: endChange
+                    }).data("kendoDatePicker");
+
+                    start.max(end.value());
+                    end.min(start.value());
+                });
+            </script>
+
+           
+        </div>
+
+			<!-- k-content 끝-->
+			</div>
+	</div>
+    <div class="demo-section1">
+        <div id="listView"></div>
+        <div id="pager" class="k-pager-wrap"></div>
+    </div>
+
+    <script type="text/x-kendo-tmpl" id="template">
+        <div class="product">
+            <img src="../../content/web/foods/${ProductID}.jpg" alt="${ProductName} image" />
+            <h3>#:ProductName#</h3>
+            <p>#:kendo.toString(UnitPrice, "c")#</p>
+        </div>
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var dataSource = new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: "http://demos.kendoui.com/service/Products",
+                            dataType: "jsonp"
+                        }
+                    },
+                    pageSize: 15
+                });
+
+            $("#pager").kendoPager({
+                dataSource: dataSource
+            });
+
+            $("#listView").kendoListView({
+                dataSource: dataSource,
+                template: kendo.template($("#template").html())
+            });
+        });
+    </script>
+
