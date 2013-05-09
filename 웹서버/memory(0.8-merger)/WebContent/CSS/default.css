@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 body {
-	background-color: #898989;
+	background-color: #FFFFFF;
 	margin:0;
 	padding:0;
 	font-size: 0.75em;
@@ -9,10 +9,15 @@ body {
 	color: #333;
 }
 #wrap {
+	width: 971px;
 	text-align:left;
+	margin: 0;
+	margin-rigth: auto;
+	margin-left: auto;
 }
 header {
-	height:151px;
+	background-color: #6CC0FF;
+	height:230px;
 	margin:0;
 	padding:0;
 }
@@ -26,8 +31,9 @@ header {
 }
 #logo {
 	float:left;
-	width:265px;
-	margin:0 0 0 20px;
+	width:500px;
+	margin:80px 0 0 200px;
+/* 	padding: 100px 0 0 200px; */
 }
 #login {
 	float:right;
@@ -64,9 +70,10 @@ nav#top_menu a {
 	height:20px;
 	padding:10px;
 	text-decoration:none;
-	color: #333;
+	color: #FFFFFF;
 }
 nav#top_menu a:hover {
+	color: #F90;
 	background-image: url(../images/blue.gif);
 	background-repeat: repeat-x;
 	background-position: bottom;
@@ -74,13 +81,14 @@ nav#top_menu a:hover {
 footer {
 	margin:50px 0 0 0;
 	height:80px;
-	background-image: url(../images/under_logo1.png);
-	background-repeat: no-repeat;
+	background-color: #6CC0FF;
+/* 	background-image: url(../images/under_logo1.png); */
+ 	background-repeat: no-repeat;
 	background-position: 40px center;
 }
 footer hr {
 	width:900px;
-	margin:0 0 0 15px; !important;
+	margin:0 0 0 15px;
 	margin:0 0 0 35px; 
 }
 footer #copy {
