@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Post">
+	<typeAlias alias="Post" type="model.dto.Post" />
+
+	<insert id="insertPost" parameterClass="Post">
+		insert into Post
+		values(#postid#, #userid#, #title#, #shopname#, #category#, #tel#, #image#, #imageNumber#, #text#, #uptime#, #latitude#, #longitude#)
+	</insert>
+
+	<select id="selectAll" resultClass="Post">
+		select * from Post
+	</select>
+	
+	<select id="selectByUserId" parameterClass="String" resultClass="Post">
+		select * from Post where userid= #userid# order by uptime asc
+	</select>
+	
+	<select id="selectByUserIdUptime" parameterClass="map" resultClass="Post">
+		select * from Post where userid = #userid# and uptime between #startdate# and #enddate#
+	</select>
+	
+	<delete id="deletePost" parameterClass="Int">
+	    delete from Post where postid = #postid#
+	</delete>
+	
+	<delete id="deleteDay" parameterClass="Int">
+	    delete from post where TO_CHAR(#uptime#, 'YYYYMMDD')
+	</delete>
+
+</sqlMap>
