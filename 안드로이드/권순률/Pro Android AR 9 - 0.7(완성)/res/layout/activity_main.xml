@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000" >
+
+    <!-- 이미지 뷰 부분은 사용자로부터 정해서 업로드하도록 함 -->
+
+    <EditText
+        android:id="@+id/editText01"
+        android:layout_width="fill_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView03"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:hint="텍스트를 입력하세요." >
+
+        <requestFocus />
+    </EditText>
+
+    <LinearLayout
+        android:id="@+id/linearLyaout02"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/editText01"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textView01"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="위치"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/editText02"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginRight="10dp"
+            android:ems="10"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button01"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="취소"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textView02"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="Posting"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:typeface="serif" />
+
+        <Button
+            android:id="@+id/button03"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="전송"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLyaout03"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLyaout02"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/insertPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.83"
+            android:src="@drawable/insert_image" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/editText01"
+        android:layout_below="@+id/linearLayout01"
+        android:text="0/200 바이트"
+        android:textColor="#ffffff" />
+
+</RelativeLayout>
