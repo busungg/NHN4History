@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Share">
+	<typeAlias alias="Share" type="model.dto.Share" />
+
+	<insert id="insertShare" parameterClass="Share">
+		insert into Share (userid, simage, syear, smonth, sday) 
+		values(#userid#, #simage#, #syear#, #smonth#, #sday#)
+	</insert>
+	
+	<select id="selectAll" resultClass="Share">
+		select * from Share
+	</select>
+	
+	<select id="selectId" resultClass="Share" parameterClass="Int">
+		select * from Share where shareid = #id#
+	</select>
+	
+	<delete id="delete" parameterClass="Int">
+	    delete from Share where shareid = #id#
+	</delete>
+	
+</sqlMap>
