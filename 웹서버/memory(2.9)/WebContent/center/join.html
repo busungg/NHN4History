@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>about</title>
+
+<link href="CSS/default.css" rel="stylesheet" type="text/css">
+<link href="CSS/main.css" rel="stylesheet" type="text/css">
+<link href="CSS/mypage.css" rel="stylesheet" type="text/css">
+<link href="CSS/subpage.css" rel="stylesheet" type="text/css">
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="http://cdn.kendostatic.com/2013.1.319/js/kendo.all.min.js"></script>
+
+
+<!-- 메뉴바 가운데정렬 -->
+<link rel='stylesheet' id='rgs-css'
+	href='http://www.seanhurley.com/wp-content/themes/salient/css/rgs.css?ver=3.5.1'
+	type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-css'
+	href='http://www.seanhurley.com/wp-content/themes/salient/css/responsive.css?ver=3.5.1'
+	type='text/css' media='all' />
+
+<!-- <link rel='stylesheet' id='main-styles-css'
+	href='http://www.seanhurley.com/wp-content/themes/salient/style.css?ver=3.5.1'
+	type='text/css' media='all' /> -->
+
+<link rel='stylesheet' id='orbit-css'
+	href='http://www.seanhurley.com/wp-content/themes/salient/css/orbit.css?ver=3.5.1'
+	type='text/css' media='all' />
+<script type='text/javascript'
+	src='http://www.seanhurley.com/wp-includes/js/jquery/jquery.js?ver=1.8.3'></script>
+<script type='text/javascript'
+	src='http://www.seanhurley.com/wp-content/themes/salient/js/modernizr.js?ver=2.6.2'></script>
+
+<!-- 이게 메뉴바야ㅑㅑㅑㅑㅑㅑ -->
+<script type='text/javascript'
+	src='http://www.seanhurley.com/wp-content/themes/salient/js/superfish.js?ver=1.4.8'></script>
+<script type='text/javascript'
+	src='http://www.seanhurley.com/wp-content/themes/salient/js/easing.js?ver=1.3'></script>
+<script type='text/javascript'
+	src='http://www.seanhurley.com/wp-content/themes/salient/js/nicescroll.js?ver=3.1'></script>
+<script type='text/javascript'
+	src='http://www.seanhurley.com/wp-content/themes/salient/js/prettyPhoto.js?ver=3.1.5'></script>
+<script type='text/javascript'
+	src='http://www.seanhurley.com/wp-content/themes/salient/js/init.js?ver=1.0'></script>
+
+
+<script type='text/javascript'
+	src='http://www.seanhurley.com/wp-content/themes/salient/js/orbit.js?ver=1.4'></script>
+
+<!-- jQuery를 사용하기 위한 CDN 방식 코드 임포트-->
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+
+<!-- ajax 통신을 위한 자바스크립트 코드 -->
+<script type="text/javascript">
+	//trim 함수 제작
+	//http://dragonraja2010.blogspot.kr/2011/01/trim.html
+	String.prototype.trim = function() {
+		return this.replace(/(^\s*)|(\s*$)/gi, "");
+	}
+
+	var httpRequest1 = null;
+	var userIdResult = false; // 아이디가 이미 존재하는 경우
+	var passwordResult = false; // 패스워드가 같지 않은 경우
+	var emailResult = false;
+
+	function getXMLHttpRequest() {
+		if (window.ActiveXObject) {
+			try {
+				return new ActiveXObject("Msxml2.XMLHTTP");
+			} catch (e) {
+				try {
+					return new ActiveXObject("Microsoft.XMLHTTP");
+				} catch (e1) {
+					return null;
+				}
+			}
+		} else if (window.XMLHttpRequest) {
+			return new XMLHttpRequest();
+		} else {
+			return null;
+		}
+	}
+
+	/* function passwordCheck(){
+		var password1 = $("#password1").attr("value");
+		var password2 = $("#password2").attr("value");
+	} */
+
+	$(document).ready(function() {
+		//alert("이거먼저 초기화!");
+		/* 패스워드 실시간 검증 로직 구현 */
+		$("#password1").keyup(function(event) {
+			//alert("패스워드 검증되냐?");
+			var password1 = $("#password1").attr("value");
+			var password2 = $("#password2").attr("value");
+
+			if (password1 == password2) { //패스워드가 동일한 경우
+				$("#passwordResult").text("동일한 패스워드입니다.");
+				passwordResult = true;
+			} else { // 패스워드가 동일하지 않은 경우
+				$("#passwordResult").text("패스워드가 동일하지 않습니다.");
+				passwordResult = false;
+			}
+		});
+		/* .keydown(function(event){
+			var password1 = $("#password1").attr("value");
+			var password2 = $("#password2").attr("value");
+			
+			if(password1 == password2){ //패스워드가 동일한 경우
+				$("#passwordResult").text("OK");
+			}else{ // 패스워드가 동일하지 않은 경우
+				$("#passwordResult").text("");
+			}
+		}); */
+
+		$("#password2").keyup(function(event) {
+			//alert("패스워드 검증되냐?");
+			var password1 = $("#password1").attr("value");
+			var password2 = $("#password2").attr("value");
+
+			if (password1 == password2) { //패스워드가 동일한 경우
+				$("#passwordResult").text("동일한 패스워드입니다.");
+				passwordResult = true;
+			} else { // 패스워드가 동일하지 않은 경우
+				$("#passwordResult").text("패스워드가 동일하지 않습니다.");
+				passwordResult = false;
+			}
+		});
+		/* .keydown(function(event){
+			var password1 = $("#password1").attr("value");
+			var password2 = $("#password2").attr("value");
+			
+			if(password1 == password2){ //패스워드가 동일한 경우
+				$("#passwordResult").text("OK");
+			}else{ // 패스워드가 동일하지 않은 경우
+				$("#passwordResult").text("");
+			}
+		}); */
+		$("#email1").keyup(function(event) {
+			//alert("패스워드 검증되냐?");
+			var email1 = $("#email1").attr("value");
+			var email2 = $("#email2").attr("value");
+
+			if (email1 == email2) { //패스워드가 동일한 경우
+				$("#emailResult").text("동일한 메일주소입니다.");
+				emailResult = true;
+			} else { // 패스워드가 동일하지 않은 경우
+				$("#emailResult").text("메일주소가 동일하지 않습니다.");
+				emailResult = false;
+			}
+		});
+
+		$("#email2").keyup(function(event) {
+			//alert("패스워드 검증되냐?");
+			var email1 = $("#email1").attr("value");
+			var email2 = $("#email2").attr("value");
+
+			if (email1 == email2) { //패스워드가 동일한 경우
+				$("#emailResult").text("동일한 메일주소입니다.");
+				emailResult = true;
+			} else { // 패스워드가 동일하지 않은 경우
+				$("#emailResult").text("메일주소가 동일하지 않습니다.");
+				emailResult = false;
+			}
+		});
+	});//ready 함수 마지막
+
+	function post_to_url(path, params, method) {
+		method = method || "post"; // Set method to post by default, if not specified.
+		// The rest of this code assumes you are not using a library.
+		// It can be made less wordy if you use one.
+		var form = document.createElement("form");
+		form.setAttribute("method", method);
+		form.setAttribute("action", path);
+		for ( var key in params) {
+			var hiddenField = document.createElement("input");
+			hiddenField.setAttribute("type", "hidden");
+			hiddenField.setAttribute("name", key);
+			hiddenField.setAttribute("value", params[key]);
+			form.appendChild(hiddenField);
+		}
+		document.body.appendChild(form);
+		form.submit();
+	}
+
+	function sign() {
+
+		if (userIdResult == false) {
+			alert("아이디 중복확인을 해주세요.");
+			return false;
+		}
+
+		if (passwordResult == false) {
+			alert("동일한 패스워드를 입력해주세요.");
+			return false;
+		}
+
+		if (emailResult == false) {
+			alert("동일한 메일주소를 입력해주세요.");
+			return false;
+		}
+
+		var userId = $("#userId").attr("value");
+		var userPw = $("#password1").attr("value");
+		var name = encodeURIComponent($("#name").attr("value"));
+		var email = $("#email1").attr("value");
+		
+		post_to_url("/memory/Service?action=sign", {"userId":userId, "userPw":userPw, "uname":name, "email":email, "mode":"web"},"post");
+		//location.href="/memory/Service?action=sign&userId=" + userId + "&userPw=" + userPw + "&uname=" + name + "&email=" + email + "&mode=web";
+	}
+
+	function userIdCheck() {
+		//var userId = document.getElementById("userId").value;
+		var userId = $("#userId").attr("value");
+		var mode = "userIdCheck";
+
+		if (userId.trim() == "") {
+			alert("아이디를 입력해주세요.");
+			return false;
+		}
+
+		httpRequest1 = getXMLHttpRequest();
+		httpRequest1.onreadystatechange = userIdCheckCallbackFunction; // 콜백 함수 등록
+		httpRequest1.open("POST", "../sign.jsp", true);
+		httpRequest1.setRequestHeader('Content-Type',
+				'application/x-www-form-urlencoded');
+		httpRequest1.send("userId=" + userId + "&mode=" + mode);
+	}
+
+	function userIdCheckCallbackFunction() {
+		if (httpRequest1.readyState == 4) {
+			if (httpRequest1.status == 200) {//httpRequest1.status == 0인 경우 로컬 파일에서 
+				var text = httpRequest1.responseText;
+				if (text.trim() == "yes") {
+					$("#userIdResult").text("사용할 수 있는 아이디입니다.");
+					userIdResult = true;
+				} else { // no의 경우이므로
+					$("#userIdResult").text("사용 중인 아이디 입니다.");
+					userIdResult = false;
+				}
+			}
+		}//if문 마지막
+	}//함수 마지막
+</script>
+</head>
+
+<!-- 회원가입 -->
+
+<!-- 상단 메뉴 탭 -->
+<body class="page page-id-18 page-template-default noise"
+	data-smooth-scrolling="1">
+
+	<jsp:include page="reference/header.jsp" flush="false" />
+
+
+	<!-- 이것도 필수 글자 화면에 맞춰주는거 -->
+	<div class="container main-content">
+
+		<!-- 뭔지몰라도 구분짓는건가보임 -->
+		<div class="row">
+
+<!-- 			<div class="col span_4">
+			
+			</div> -->
+	
+		<article>
+
+			<!-- 회원가입 정보 입력란 -->
+			<h1>Join Us</h1>
+			<form>
+				<fieldset>
+					<legend>Basic Info</legend>
+					<table>
+						<tr>
+							<td>User ID</td>
+							<td><input id="userId" name="" type="text" class="id"></td>
+							<td><input name="" type="button" value="중복확인" class="dup"
+								onclick="userIdCheck()"></td>
+						</tr>
+						<tr>
+							<td colspan="5"><div id="userIdResult"></div></td>
+						</tr>
+						<tr>
+							<td>Password</td>
+							<td><input id="password1" name="" type="password"
+								class="pass"></td>
+						</tr>
+						<tr>
+							<td>Retype Password</td>
+							<td><input id="password2" name="" type="password"
+								class="pass"></td>
+						</tr>
+						<tr>
+							<td colspan="5"><div id="passwordResult"></div></td>
+						</tr>
+						<tr>
+							<td>Name</td>
+							<td><input id="name" name="" type="text" class="nick"></td>
+						</tr>
+						<tr>
+							<td>E-Mail</td>
+							<td><input id="email1" name="" type="email" class="email"></td>
+						</tr>
+						<tr>
+							<td>Retype E-mail</td>
+							<td><input id="email2" name="" type="email" class="email"></td>
+						</tr>
+						<tr>
+							<td colspan="5"><div id="emailResult"></div></td>
+						</tr>
+					</table>
+				</fieldset>
+
+				<div class="clear"></div>
+				<div id="buttons">
+					<!-- 확인 버튼 클릭시, 모든 정보가 정상적으로 입력되었는지 확인하고 정보를 LoginCommand로 전송 -->
+					<input name="" type="button" value="확인" onclick="sign()"
+						class="submit">
+					<!-- 취소 버튼 클릭시, 회원 가입을 취소하고 메인 페이지로 이동 -->
+					<input name="" type="button" value="취소" onclick="javascript:history.go(-1)" class="cancel">
+				</div>
+
+			</form>
+
+		</article>
+		
+			<div class="col span_8 col_last">
+			
+			</div>
+
+		</div>
+		<!--/row-->
+
+	</div>
+	<!--/container-->
+
+
+</body>
+</html>
