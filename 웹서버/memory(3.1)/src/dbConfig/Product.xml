@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="Product">
+	<typeAlias alias="Product" type="dto.Product"/>
+		<resultMap class="Product" id="Product">
+			<result property="pCode" column="p_code"/>		
+			<result property="pName" column="p_name"/>
+			<result property="price" column="price"/>
+			<result property="quantity" column="quantity"/>
+			<result property="pDesc" column="p_desc"/>		
+		</resultMap>
+	
+	<select id="selectAll" resultMap="Product">
+		select * from product
+	</select>
+	
+	<select id="selectBypCode" parameterClass="Integer" resultMap="Product">
+		select * from product where p_code = #pCode#
+	</select>	
+	
+	<insert id="insert" parameterClass="Product">
+		insert into product values(#pCode#, #pName#, #price#, #quantity#, #pDesc#)
+	</insert>
+	
+	<delete id="delete" parameterClass="Integer">
+		delete from product where p_code = #pCode#
+	</delete>
+	
+	<update id="update" parameterClass="Product">
+		update product set p_name=#pName#, price=#price#, quantity=#quantity#, p_desc=#pDesc# where p_code=#pCode#
+	</update>
+
+
+</sqlMap> 
+
