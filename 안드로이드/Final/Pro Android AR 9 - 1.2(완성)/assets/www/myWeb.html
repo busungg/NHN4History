@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+</head>
+<body>
+	<div data-role="page" data-theme="a">
+		<script>
+			function exit(){
+				navigator.app.exitApp();
+			}
+			
+			function goMyWeb(){
+				//href.location="http://155.230.52.63:8080/memory/Service?action=list";
+				//$.mobile.changePage("http://155.230.52.63:8080/memory/Service?action=list");
+			}
+		</script>
+
+		<div data-role="header">
+			<h1>Memory</h1>
+		</div>
+
+		<div data-role="content">
+			<div class="ui-grid-solo">
+				<div class="ui-block-a">
+					<!-- http://troll.kert.or.kr:8080/memory/ -->
+					<!--  <a href="http://troll.kert.or.kr:8080/memory/Service?action=list" style="text-decoration:none" rel="external"><input type="button" id="goMyWebBtn" name="goMyWeb" value="들어가기" data-icon="check"/></a> -->
+					<a href="http://155.230.52.63:8080/memory/Service?action=list&mapView=mobile" style="text-decoration:none" rel="external"><input type="button" id="goMyWebBtn" name="goMyWeb" value="들어가기" data-icon="check"/></a>
+				<!--<a rel="external"><input type="button" id="goMyWebBtn" name="goMyWeb" value="들어가기" data-icon="check"/></a></div>
+				<a href="http://155.230.52.63:8080/memory/Service?action=list" rel="external">들어가기2</a>-->
+				<div class="ui-block-a"><input type="button" name="exit" value="종료" data-icon="delete" onClick="exit()"/></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
