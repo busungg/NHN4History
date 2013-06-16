@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+#main_img {
+	width:100%;
+	height:300px;
+	background-repeat: no-repeat;
+}
+
+
+#login_box {
+	/* 전체 로그인 박스의 윤곽을 만들어 주는 곳 */
+	margin:10px;
+	border:1px solid #666666;
+	border-radius:10px;
+	width:170px;
+	height: 260px;
+	padding:10px 10px 10px 10px;
+}
+
+label {
+	/* input 박스에 앞서 라벨링 해주는 label 태그*/
+	width:50px;
+	display:block;
+	float: left;
+	margin:3px 0;	
+}
+input {
+	/* input 박스의 크기와 테두리를 지정 */
+	border:1px solid #333333;
+	width:100px;
+}
+
+input:focus {
+	/* 수도 선택자로 해당 input 박스에 커서가 왔을 때 변화 모습 */
+	background-color: #FC0;
+	border:1px solid #000;
+	color:#333333;
+}
+
+/* 아래와 같이 정의 하면 링크가 텍스트에만 걸리는 것이 아니라 전체 박스에 링크가 걸림 */
+
+.btn a {
+	/* 로그인 버튼 잡아주는 곳 */
+	margin:7px 7px 7px 0;
+	display:block;
+	padding:5px;
+	text-align:center;
+	width:100px;
+	border:1px solid #333;
+	text-decoration:none;
+	border-radius:5px;
+	background-color: #FC3;
+	color: #333;
+	box-shadow:3px 3px 3px #999999;
+}
+
+.btn a:hover {
+	/* 로그인 버튼에 마우스 오버를 할 경우 액션 */
+	background-color:#FF6633;
+	color:#FFF;
+
+}
+.btn a:active {
+	/* 로그인 버튼에 마우스로 클릭를 할 경우 액션 */
+	box-shadow:none;
+}
+
+.clear {
+	clear:both;
+}
